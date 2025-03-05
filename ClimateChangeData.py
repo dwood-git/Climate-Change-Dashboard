@@ -5,9 +5,9 @@ from dash import Dash, dcc, html
 from dash.dependencies import Input, Output
 import plotly.express as px
 
-# --------------------------
+# -------------------------
 # Initialize Flask App
-# --------------------------
+# -------------------------
 server = Flask(__name__)
 
 # --------------------------
