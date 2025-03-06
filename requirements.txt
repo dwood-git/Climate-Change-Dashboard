@@ -8,4 +8,4 @@ Flask==2.2.3
 gunicorn==20.1.0
 pandas==1.5.3
 numpy==1.24.2
-werkzeug==2.2.2
+werkzeug>=2.2.2
