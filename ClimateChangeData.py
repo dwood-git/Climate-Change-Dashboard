@@ -4,6 +4,47 @@ from flask import Flask
 from dash import Dash, dcc, html
 from dash.dependencies import Input, Output
 import plotly.express as px
+import folium
+import rasterio
+import numpy as np
+import matplotlib.colors as colors
+
+# Load the GeoTIFF
+with rasterio.open("assets/California_FireFrequency_2001_2022.tif") as src:
+    data = src.read(1)
+
+# Plot and save as PNG with colormap
+# Normalize and clean data
+normed_data = data.astype(float)
+normed_data[normed_data <= 0] = np.nan  # Mask zero and negative values
+normed_data = normed_data / np.nanmax(normed_data)
+
+# Plot colormap
+plt.figure(figsize=(8, 10), dpi=300)  # adds clarity
+plt.imshow(normed_data, cmap='gist_heat', interpolation='nearest', vmin=0, vmax=1)
+plt.axis('off')
+
+# Save as a transparent overlay
+plt.savefig("assets/California_FireFrequency_Overlay.png", bbox_inches='tight', pad_inches=0, transparent=True)
+plt.close()
+
+# --------------------------
+# Generate the Folium wildfire map
+# --------------------------
+wildfire_map = folium.Map(location=[36.5, -119], zoom_start=6)
+
+folium.raster_layers.ImageOverlay(
+    image='assets/California_FireFrequency_Overlay.png',
+    bounds=[[32.0, -124.4], [42.1, -114.1]],  # CA bounds
+    opacity=0.6,
+    name='Fire Frequency'
+).add_to(wildfire_map)
+
+folium.LayerControl().add_to(wildfire_map)
+
+# Save as an embeddable HTML file
+wildfire_map.save("assets/california_fire_map.html")
+
 
 # -------------------------
 # Initialize Flask App
@@ -11,144 +52,19 @@ import plotly.express as px
 server = Flask(__name__)
 
 # --------------------------
-# Load and Process Data
-# --------------------------
-data = pd.read_csv('data/LO-GLBM.csv', skiprows=1)
-
-#Check column names and preview data
-print("Columns in the dataset:")
-print(data.columns)
-print("First 145 rows of data:")
-print(data.head())
-print(data.tail())
-
-# Add a column for decades (e.g., 1980 for years 1980-1989)
-data['Decade'] = (data['Year'] // 10) * 10
-
-# Convert monthly columns to numeric (coerce errors to NaN)
-columns_to_convert = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-                      'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-data[columns_to_convert] = data[columns_to_convert].apply(pd.to_numeric, errors='coerce')
-
-# Calculate the annual average temperature anomaly
-data['Annual Average'] = data[columns_to_convert].mean(axis=1)
-
-# Verify the Annual Average calculation
-print("First few rows with Annual Average:")
-print(data[['Year', 'Annual Average']].head())
-
-# Group the data by decade and compute the mean anomaly
-decade_avg = data.groupby('Decade')['Annual Average'].mean().reset_index()
-
-# Print the calculated decade averages
-print("Decade averages:")
-print(decade_avg)
-
-plt.figure(figsize=(10, 6))
-plt.bar(decade_avg['Decade'], decade_avg['Annual Average'], color='orange', width=8)
-plt.title('Average Temperature Anomalies by Decade', fontsize=16)
-plt.xlabel('Decade', fontsize=14)
-plt.ylabel('Temperature Anomaly (°C)', fontsize=14)
-plt.grid(axis='y')
-# plt.show()  # Comment this out so it doesn't block the Flask server
-
-# --------------------------
 # Initialize Dash App with Flask Server
 # --------------------------
 app = Dash(__name__, server=server, url_base_pathname="/dashboard/")
 
-# Plotly bar chart
-fig = px.bar(
-    decade_avg,
-    x='Decade',
-    y='Annual Average',
-    title='Average Temperature Anomalies by Decade',
-    labels={'Decade': 'Decade', 'Annual Average': 'Temperature Anomaly (°C)'},
-    color_discrete_sequence=['orange']
-)
-fig.update_layout(
-    xaxis=dict(title='Decade'),
-    yaxis=dict(title='Temperature Anomaly (°C)'),
-    title=dict(font=dict(size=24))
-)
-
-# Line chart for annual anomalies over time
-line_fig = px.line(
-    data,
-    x='Year',
-    y='Annual Average',
-    title='Annual Temperature Anomalies Over Time',
-    labels={'Year': 'Year', 'Annual Average': 'Temperature Anomaly (°C)'}
-)
-line_fig.update_layout(
-    xaxis=dict(title='Year'),
-    yaxis=dict(title='Temperature Anomaly (°C)'),
-    title=dict(font=dict(size=24))
-)
-
-# Assume line_fig has been defined earlier as a Plotly line chart, for example:
-line_fig = px.line(
-    data,
-    x='Year',
-    y='Annual Average',
-    title='Annual Temperature Anomalies Over Time',
-    labels={'Year': 'Year', 'Annual Average': 'Temperature Anomaly (°C)'}
-)
-line_fig.update_layout(
-    xaxis=dict(title='Year'),
-    yaxis=dict(title='Temperature Anomaly (°C)'),
-    title=dict(font=dict(size=24))
-)
-
-# Define the layout with a dropdown and two graph components
+# Application Layout
 app.layout = html.Div([
-    html.H1('Temperature Anomalies Dashboard', style={'textAlign': 'center'}),
-    
-    # Dropdown for interactive selection
-    dcc.Dropdown(
-        id='anomaly-type',
-        options=[
-            {'label': 'Annual Average', 'value': 'Annual Average'},
-            {'label': 'Winter (DJF)', 'value': 'DJF'},
-            {'label': 'Spring (MAM)', 'value': 'MAM'},
-            {'label': 'Summer (JJA)', 'value': 'JJA'},
-            {'label': 'Fall (SON)', 'value': 'SON'}
-        ],
-        value='Annual Average',  # default value
-        clearable=False,
-        style={'width': '50%', 'margin': 'auto'}
-    ),
-    
-    # First graph: This one will update via a callback based on the dropdown
-    dcc.Graph(id='anomaly-graph'),
-    
-    # Second graph: A static line chart (or you can update it with a callback as well)
-    dcc.Graph(id='line-chart', figure=line_fig)
+    html.H1('Wildfire Climate Change Visualization Dashboard', style={'textAlign': 'center'}),
+    html.H2("🔥 California Wildfire Frequency (2001–2022)", style={'textAlign': 'center'}),
+    html.Iframe(
+        srcDoc=open('assets/california_fire_map.html', 'r').read(),
+        width='100%', height='600'
+    )
 ])
-
-
-# Callback to update the graph based on dropdown selection
-@app.callback(
-    Output('anomaly-graph', 'figure'),
-    [Input('anomaly-type', 'value')]
-)
-def update_graph(selected_anomaly):
-    # 'decade_avg' DataFrame
-    fig = px.bar(
-        decade_avg,
-        x='Decade',
-        y=selected_anomaly,
-        title=f'{selected_anomaly} Temperature Anomalies by Decade',
-        labels={'Decade': 'Decade', selected_anomaly: 'Temperature Anomaly (°C)'},
-        color_discrete_sequence=['orange']
-    )
-    fig.update_layout(
-        xaxis=dict(title='Decade'),
-        yaxis=dict(title='Temperature Anomaly (°C)'),
-        title=dict(font=dict(size=24))
-    )
-    return fig
-
 
 # --------------------------
 # Define Flask Route for Homepage
@@ -163,3 +79,4 @@ def index():
 if __name__ == "__main__":
     # Running the Flask server will serve both the Flask routes and the Dash app
     server.run(debug=True, port=5000)
+  
