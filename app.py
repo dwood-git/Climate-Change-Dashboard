@@ -25,7 +25,7 @@ fig_trends = html.Div([
             "Visualizing yearly average temperatures and climate trends (1980–2022) for Georgia and California.",
             className="graph-subtitle"
         ),
-    ], style={"marginBottom": "10px", "marginTop": "-30px"}),
+    ], style={"marginBottom": "10px", "marginTop": "-70px"}),
 
         html.Div([
             html.H3("Georgia Temperature", className="graph-title"),
@@ -37,6 +37,7 @@ fig_trends = html.Div([
                 "This graph shows Georgia's average yearly temperature from 1980 to 2022, highlighting changes over time.",
                 className="graph-subtitle"
             ),
+            html.A("View dataset (NOAA Climate Data)", href="https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/statewide/time-series", target="_blank", style={"display": "block", "textAlign": "center", "marginBottom": "20px", "fontSize": "14px", "color": "#1a73e8"})
         ], className="graph-card"),
 
         html.Div([
@@ -49,6 +50,7 @@ fig_trends = html.Div([
                 "This graph displays California's yearly average temperature, showing warming trends and variability.",
                 className="graph-subtitle"
             ),
+            html.A("View dataset (NOAA Climate Data)", href="https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/statewide/time-series", target="_blank", style={"display": "block", "textAlign": "center", "marginBottom": "20px", "fontSize": "14px", "color": "#1a73e8"})
         ], className="graph-card"),
 
         html.Div([
@@ -61,6 +63,7 @@ fig_trends = html.Div([
                 "This chart represents Georgia's average annual rainfall, helping us understand water availability trends.",
                 className="graph-subtitle"
             ),
+            html.A("View dataset (NOAA Climate Data)", href="https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/statewide/time-series", target="_blank", style={"display": "block", "textAlign": "center", "marginBottom": "20px", "fontSize": "14px", "color": "#1a73e8"})
         ], className="graph-card"),
 
         html.Div([
@@ -73,11 +76,19 @@ fig_trends = html.Div([
                 "This chart shows California's annual rainfall, which can influence droughts and wildfires.",
                 className="graph-subtitle"
             ),
+            html.A("View dataset (NOAA Climate Data)", href="https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/statewide/time-series", target="_blank", style={"display": "block", "textAlign": "center", "marginBottom": "20px", "fontSize": "14px", "color": "#1a73e8"})
         ], className="graph-card"),
     ], className="section-light")
 
 veg_df = pd.read_csv("data/vegetation/Vegetation_Index_California_Georgia.csv")
 fig_veg = html.Div([
+    html.Div([
+        html.H2("🌿 Vegetation Indices", className="graph-title"),
+        html.P(
+            "Tracking vegetation health using satellite indices NDVI and EVI for Georgia and California.",
+            className="graph-subtitle"
+        ),
+        ], style={"marginBottom": "10px", "marginTop": "-70px"}),
     html.Div([
         html.H3("NDVI Line Chart", className="graph-title"),
         dcc.Loading(
@@ -85,9 +96,10 @@ fig_veg = html.Div([
             type="circle"
         ),
         html.P(
-            "NDVI (Normalized Difference Vegetation Index) shows how green and healthy the vegetation is.",
+            "NDVI (Normalized Difference Vegetation Index) indicates vegetation health by measuring greenness from satellite imagery. Higher NDVI values mean denser and healthier plant cover, helping identify drought stress or seasonal changes.",
             className="graph-subtitle"
         ),
+        html.A("View dataset (MODIS Vegetation Data)", href="https://lpdaac.usgs.gov/products/mod13a2v006/", target="_blank", style={"display": "block", "textAlign": "center", "marginBottom": "20px", "fontSize": "14px", "color": "#1a73e8"})
     ], className="graph-card"),
 
     html.Div([
@@ -97,9 +109,10 @@ fig_veg = html.Div([
             type="circle"
         ),
         html.P(
-            "EVI (Enhanced Vegetation Index) helps us measure plant health more clearly through thick canopies or haze.",
+            "EVI (Enhanced Vegetation Index) offers a more accurate look at plant health in areas with dense forests or atmospheric conditions like haze. It adjusts for canopy cover and soil brightness, complementing NDVI for robust vegetation analysis.",
             className="graph-subtitle"
         ),
+        html.A("View dataset (MODIS Vegetation Data)", href="https://lpdaac.usgs.gov/products/mod13a2v006/", target="_blank", style={"display": "block", "textAlign": "center", "marginBottom": "20px", "fontSize": "14px", "color": "#1a73e8"})
     ], className="graph-card"),
 
     # Satellite Vegetation Comparison Section
@@ -125,6 +138,13 @@ ml_df = pd.read_csv("data/california/Fire_Model_California.csv")
 
 fig_corr = html.Div([
     html.Div([
+        html.H2("📈 Climate Correlations", className="graph-title"),
+        html.P(
+            "Exploring the relationships between vegetation, drought, temperature, and wildfire activity in California and Georgia.",
+            className="graph-subtitle"
+        ),
+        ], style={"marginBottom": "10px", "marginTop": "-70px"}),
+    html.Div([
         html.H3("Drought Severity Over Time (GA vs CA)", className="graph-title"),
         dcc.Loading(
             dcc.Graph(
@@ -135,9 +155,10 @@ fig_corr = html.Div([
             type="circle"
         ),
         html.P(
-            "This chart shows how drought levels changed in Georgia and California over time.",
+            "This chart compares drought severity between Georgia and California over time. Higher values indicate more intense drought conditions. Tracking these trends helps understand long-term stress on ecosystems and how it might contribute to wildfire susceptibility or reduced vegetation growth.",
             className="graph-subtitle"
         ),
+        html.A("View dataset (US Drought Monitor)", href="https://droughtmonitor.unl.edu/DmData/DataDownload.aspx", target="_blank", style={"display": "block", "textAlign": "center", "marginBottom": "20px", "fontSize": "14px", "color": "#1a73e8"})
     ], className="graph-card"),
 
     html.Div([
@@ -147,9 +168,10 @@ fig_corr = html.Div([
             type="circle"
         ),
         html.P(
-            "The heatmap gives a year-by-year overview of drought severity in both states.",
+            "This heatmap visualizes how drought severity varies year by year in Georgia and California. Darker shades represent more severe droughts. It’s useful for spotting prolonged dry periods and identifying environmental stress patterns aligned with fire seasons or vegetation decline.",
             className="graph-subtitle"
         ),
+        html.A("View dataset (US Drought Monitor)", href="https://droughtmonitor.unl.edu/DmData/DataDownload.aspx", target="_blank", style={"display": "block", "textAlign": "center", "marginBottom": "20px", "fontSize": "14px", "color": "#1a73e8"})
     ], className="graph-card"),
 
     html.Div([
@@ -159,9 +181,10 @@ fig_corr = html.Div([
             type="circle"
         ),
         html.P(
-            "This matrix shows how different climate variables like vegetation and fires relate to each other.",
+            "This correlation matrix helps identify how strongly climate variables like NDVI, EVI, fire count, and drought severity are related. A higher absolute value means a stronger correlation (positive or negative). It’s a helpful way to quickly see which features tend to change together.",
             className="graph-subtitle"
         ),
+        html.A("View dataset (California Fire Perimeters Data)", href="https://data.ca.gov/dataset/california-fire-perimeters-all/resource/b7dd3a39-2163-4a68-9c1a-98ef25d13147", target="_blank", style={"display": "block", "textAlign": "center", "marginBottom": "20px", "fontSize": "14px", "color": "#1a73e8"})
     ], className="graph-card"),
 
     html.Div([
@@ -216,9 +239,10 @@ fig_corr = html.Div([
             type="circle"
         ),
         html.P(
-            "Each bubble shows vegetation, drought, and fire data for a specific year in California. Bigger and darker bubbles mean more fires.",
+            "Each bubble represents a year of data for California, plotting vegetation health (NDVI), drought severity, and fire count. Larger, darker bubbles indicate more fires. This visual helps uncover how vegetation loss and drought intensity may relate to wildfire activity over time.",
             className="graph-subtitle"
         ),
+        html.A("View dataset (California Fire Perimeters Data)", href="https://data.ca.gov/dataset/california-fire-perimeters-all/resource/b7dd3a39-2163-4a68-9c1a-98ef25d13147", target="_blank", style={"display": "block", "textAlign": "center", "marginBottom": "20px", "fontSize": "14px", "color": "#1a73e8"}),
         html.Div(id='info-panel', style={'textAlign': 'center', 'marginTop': '10px', 'fontSize': '14px', 'color': '#333'})
     ], className="graph-card"),
 
@@ -232,6 +256,7 @@ fig_corr = html.Div([
             "This timeline chart shows how vegetation and fire severity changed year by year in California.",
             className="graph-subtitle"
         ),
+        html.A("View dataset (California Fire Perimeters Data)", href="https://data.ca.gov/dataset/california-fire-perimeters-all/resource/b7dd3a39-2163-4a68-9c1a-98ef25d13147", target="_blank", style={"display": "block", "textAlign": "center", "marginBottom": "20px", "fontSize": "14px", "color": "#1a73e8"})
     ], className="graph-card"),
 
     html.Div([
@@ -259,13 +284,24 @@ fig_corr = html.Div([
                 'marginTop': '10px',
                 'marginBottom': '30px'
             }
-        )
+        ),
+         html.Pre("""// GEE MODIS Burned Area (California)
+var burned = ee.ImageCollection("MODIS/061/MCD64A1")
+  .filterDate("2001-01-01", "2022-12-31")
+  .select("BurnDate")
+  .mean()
+  .clip(ee.FeatureCollection("TIGER/2018/States")
+         .filter(ee.Filter.eq("NAME", "California")));
+Map.centerObject(burned, 6);
+Map.addLayer(burned, {min: 0, max: 366, palette: ['ffffff', 'ff0000']}, "Burned Area");""",
+            style={"backgroundColor": "#f4f4f4", "padding": "10px", "borderRadius": "8px", "fontSize": "13px", "overflowX": "auto", "color": "#000000"}),
+        html.A("View dataset (MODIS Burned Area - MCD64A1 v6.1)", href="https://lpdaac.usgs.gov/products/mcd64a1v061/", target="_blank", style={"display": "block", "textAlign": "center", "marginBottom": "20px", "fontSize": "14px", "color": "#1a73e8"}),
     ], className="graph-card"),
 
     html.Div([
-        html.H3("Georgia Wildfire Frequency Map (Screenshot Reference)", className="graph-title"),
+        html.H3("Georgia Wildfire Frequency Map", className="graph-title"),
         html.Img(
-            src="/assets/ga_firefreq_map.jpg",
+            src="/static/ga_firefreq_map.jpg",
             style={
                 'width': '80%',
                 'display': 'block',
@@ -275,7 +311,7 @@ fig_corr = html.Div([
             }
         ),
         html.P(
-            "Georgia map is based on MODIS Burned Area visualizations (Screenshot Version), showing cumulative wildfire frequency in the state.",
+            "Georgia map is based on MODIS Burned Area visualizations, showing cumulative wildfire frequency in the state.",
             style={
                 'textAlign': 'center',
                 'fontFamily': 'Arial, sans-serif',
@@ -284,6 +320,28 @@ fig_corr = html.Div([
                 'fontStyle': 'italic',
                 'marginTop': '10px',
                 'marginBottom': '30px'
+            }
+        ),
+        html.Pre("""// GEE MODIS Burned Area (Georgia)
+var burned = ee.ImageCollection("MODIS/061/MCD64A1")
+  .filterDate("2001-01-01", "2022-12-31")
+  .select("BurnDate")
+  .mean()
+  .clip(ee.FeatureCollection("TIGER/2018/States")
+         .filter(ee.Filter.eq("NAME", "Georgia")));
+Map.centerObject(burned, 6);
+Map.addLayer(burned, {min: 0, max: 366, palette: ['ffffff', 'ff0000']}, "Burned Area");""",
+            style={"backgroundColor": "#f4f4f4", "padding": "10px", "borderRadius": "8px", "fontSize": "13px", "overflowX": "auto", "color": "#000000"}),
+        html.A(
+            "View dataset (MODIS Burned Area - MCD64A1 v6.1)",
+            href="https://lpdaac.usgs.gov/products/mcd64a1v061/",
+            target="_blank",
+            style={
+                "display": "block",
+                "textAlign": "center",
+                "marginBottom": "20px",
+                "fontSize": "14px",
+                "color": "#1a73e8"
             }
         )
     ], className="graph-card"),
@@ -518,7 +576,7 @@ def update_veg_maps(year):
         return html.Div([
             html.Div([
                 html.H4("California (2001)", style={"textAlign": "center", "color": "#000000"}),
-                html.Img(src="/assets/2001_NVDI_CA_Map.png", style={"width": "100%", "borderRadius": "12px"}),
+                html.Img(src="/static/2001_NVDI_CA_Map.png", style={"width": "100%", "borderRadius": "12px"}),
                 html.Pre("""// GEE NDVI for California (2001)
 var ndvi = ee.ImageCollection("MODIS/006/MOD13A2")
   .filterDate("2001-01-01", "2001-12-31")
@@ -528,11 +586,12 @@ var ndvi = ee.ImageCollection("MODIS/006/MOD13A2")
          .filter(ee.Filter.eq("NAME", "California")));
 Map.centerObject(ndvi, 6);
 Map.addLayer(ndvi, {min: 0, max: 8000, palette: ['ffffff', 'ffff00', '00aa00']}, "NDVI 2001");""",
-                    style={"backgroundColor": "#f4f4f4", "padding": "10px", "borderRadius": "8px", "fontSize": "13px", "overflowX": "auto", "color": "#000000"})
+                    style={"backgroundColor": "#f4f4f4", "padding": "10px", "borderRadius": "8px", "fontSize": "13px", "overflowX": "auto", "color": "#000000"}),
+                html.A("View dataset (MODIS Vegetation NDVI)", href="https://lpdaac.usgs.gov/products/mod13a2v006/", target="_blank", style={"display": "block", "textAlign": "center", "marginBottom": "10px", "fontSize": "13px", "color": "#1a73e8"})
             ], style={"marginBottom": "20px"}),
             html.Div([
                 html.H4("Georgia (2001)", style={"textAlign": "center", "color": "#000000"}),
-                html.Img(src="/assets/2001_NVDI_GA_Map.png", style={"width": "100%", "borderRadius": "12px"}),
+                html.Img(src="/static/2001_NVDI_GA_Map.png", style={"width": "100%", "borderRadius": "12px"}),
                 html.Pre("""// GEE NDVI for Georgia (2001)
 var ndvi = ee.ImageCollection("MODIS/006/MOD13A2")
   .filterDate("2001-01-01", "2001-12-31")
@@ -542,14 +601,15 @@ var ndvi = ee.ImageCollection("MODIS/006/MOD13A2")
          .filter(ee.Filter.eq("NAME", "Georgia")));
 Map.centerObject(ndvi, 6);
 Map.addLayer(ndvi, {min: 0, max: 8000, palette: ['ffffff', 'ffff00', '00aa00']}, "NDVI 2001");""",
-                    style={"backgroundColor": "#f4f4f4", "padding": "10px", "borderRadius": "8px", "fontSize": "13px", "overflowX": "auto", "color": "#000000"})
+                    style={"backgroundColor": "#f4f4f4", "padding": "10px", "borderRadius": "8px", "fontSize": "13px", "overflowX": "auto", "color": "#000000"}),
+                html.A("View dataset (MODIS Vegetation NDVI)", href="https://lpdaac.usgs.gov/products/mod13a2v006/", target="_blank", style={"display": "block", "textAlign": "center", "marginBottom": "10px", "fontSize": "13px", "color": "#1a73e8"})
             ])
         ])
     elif year == "2022":
         return html.Div([
             html.Div([
                 html.H4("California (2022)", style={"textAlign": "center", "color": "#000000"}),
-                html.Img(src="/assets/2022_NVDI_CA_Map.png", style={"width": "100%", "borderRadius": "12px"}),
+                html.Img(src="/static/2022_NVDI_CA_Map.png", style={"width": "100%", "borderRadius": "12px"}),
                 html.Pre("""// GEE NDVI for California (2022)
 var ndvi = ee.ImageCollection("MODIS/006/MOD13A2")
   .filterDate("2022-01-01", "2022-12-31")
@@ -559,11 +619,12 @@ var ndvi = ee.ImageCollection("MODIS/006/MOD13A2")
          .filter(ee.Filter.eq("NAME", "California")));
 Map.centerObject(ndvi, 6);
 Map.addLayer(ndvi, {min: 0, max: 8000, palette: ['ffffff', 'ffff00', '00aa00']}, "NDVI 2022");""",
-                    style={"backgroundColor": "#f4f4f4", "padding": "10px", "borderRadius": "8px", "fontSize": "13px", "overflowX": "auto", "color": "#000000"})
+                    style={"backgroundColor": "#f4f4f4", "padding": "10px", "borderRadius": "8px", "fontSize": "13px", "overflowX": "auto", "color": "#000000"}),
+                html.A("View dataset (MODIS Vegetation NDVI)", href="https://lpdaac.usgs.gov/products/mod13a2v006/", target="_blank", style={"display": "block", "textAlign": "center", "marginBottom": "10px", "fontSize": "13px", "color": "#1a73e8"})
             ], style={"marginBottom": "20px"}),
             html.Div([
                 html.H4("Georgia (2022)", style={"textAlign": "center", "color": "#000000"}),
-                html.Img(src="/assets/2022_NVDI_GA_Map.png", style={"width": "100%", "borderRadius": "12px"}),
+                html.Img(src="/static/2022_NVDI_GA_Map.png", style={"width": "100%", "borderRadius": "12px"}),
                 html.Pre("""// GEE NDVI for Georgia (2022)
 var ndvi = ee.ImageCollection("MODIS/006/MOD13A2")
   .filterDate("2022-01-01", "2022-12-31")
@@ -573,7 +634,8 @@ var ndvi = ee.ImageCollection("MODIS/006/MOD13A2")
          .filter(ee.Filter.eq("NAME", "Georgia")));
 Map.centerObject(ndvi, 6);
 Map.addLayer(ndvi, {min: 0, max: 8000, palette: ['ffffff', 'ffff00', '00aa00']}, "NDVI 2022");""",
-                    style={"backgroundColor": "#f4f4f4", "padding": "10px", "borderRadius": "8px", "fontSize": "13px", "overflowX": "auto", "color": "#000000"})
+                    style={"backgroundColor": "#f4f4f4", "padding": "10px", "borderRadius": "8px", "fontSize": "13px", "overflowX": "auto", "color": "#000000"}),
+                html.A("View dataset (MODIS Vegetation NDVI)", href="https://lpdaac.usgs.gov/products/mod13a2v006/", target="_blank", style={"display": "block", "textAlign": "center", "marginBottom": "10px", "fontSize": "13px", "color": "#1a73e8"})
             ])
         ])
     else:  # Comparison view
@@ -583,34 +645,36 @@ Map.addLayer(ndvi, {min: 0, max: 8000, palette: ['ffffff', 'ffff00', '00aa00']},
                 html.Div([
                     html.Div([
                         html.Img(
-                            src="/assets/2001_NVDI_CA_Map.png",
+                            src="/static/2001_NVDI_CA_Map.png",
                             style={"width": "100%", "borderRadius": "12px", "height": "350px"}
                         ),
                     ], style={"width": "49%", "marginRight": "2%"}),
                     html.Div([
                         html.Img(
-                            src="/assets/2022_NVDI_CA_Map.png",
+                            src="/static/2022_NVDI_CA_Map.png",
                             style={"width": "100%", "borderRadius": "12px", "height": "350px"}
                         ),
                     ], style={"width": "49%"})
-                ], style={"display": "flex", "justifyContent": "space-between", "marginBottom": "20px"})
+                ], style={"display": "flex", "justifyContent": "space-between", "marginBottom": "20px"}),
+                html.A("View dataset (MODIS Vegetation NDVI)", href="https://lpdaac.usgs.gov/products/mod13a2v006/", target="_blank", style={"display": "block", "textAlign": "center", "marginBottom": "10px", "fontSize": "13px", "color": "#1a73e8"})
             ]),
             html.Div([
                 html.H4("Georgia: 2001 vs 2022", style={"textAlign": "center", "color": "#000000"}),
                 html.Div([
                     html.Div([
                         html.Img(
-                            src="/assets/2001_NVDI_GA_Map.png",
+                            src="/static/2001_NVDI_GA_Map.png",
                             style={"width": "100%", "borderRadius": "12px", "height": "350px"}
                         ),
                     ], style={"width": "49%", "marginRight": "2%"}),
                     html.Div([
                         html.Img(
-                            src="/assets/2022_NVDI_GA_Map.png",
+                            src="/static/2022_NVDI_GA_Map.png",
                             style={"width": "100%", "borderRadius": "12px", "height": "350px"}
                         ),
                     ], style={"width": "49%"})
-                ], style={"display": "flex", "justifyContent": "space-between"})
+                ], style={"display": "flex", "justifyContent": "space-between"}),
+                html.A("View dataset (MODIS Vegetation NDVI)", href="https://lpdaac.usgs.gov/products/mod13a2v006/", target="_blank", style={"display": "block", "textAlign": "center", "marginBottom": "10px", "fontSize": "13px", "color": "#1a73e8"})
             ])
         ])
 

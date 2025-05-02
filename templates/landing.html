@@ -229,6 +229,14 @@
         font-size: 0.8rem;
         padding: 1rem;
       }
+
+      section {
+        scroll-margin-top: 70px;
+      }
+    }
+
+    html {
+      scroll-padding-top: 70px;
     }
   </style>
 </head>
@@ -257,6 +265,9 @@
       <h1>The Living Pulse of Fire</h1>
       <p style="margin-top: 1rem;">Tracking Climate Change Through Wildfires in California & Georgia</p>
       <a href="/dashboard/" class="cta" style="margin-top: 4rem;">Enter Dashboard</a>
+      <div style="margin-top: 2rem; text-align: center;">
+        <img src="/static/dashboard_qr.png" alt="QR Code to Dashboard" style="width: 200px; height: 200px;" />
+      </div>
     </div>
   </header>
 
@@ -265,7 +276,7 @@
     <h2 class="section-title">Project Abstract</h2>
     <p class="section-caption">A synthesis of computer science and environmental science tackling climate change visualization.</p>
     <p style="max-width: 800px; margin: auto; text-align: center;">
-      This project visualizes the intersection of climate change and wildfire trends in California and Georgia by combining environmental data with machine learning, geospatial mapping, and full-stack web development. It uses NASA MODIS indices, NOAA climate data, and Google Earth Engine to build a live dashboard that allows users to explore regional temperature, drought severity, and fire frequency over time. Through dynamic graphing, predictive modeling, and data storytelling, the project highlights how computer science empowers environmental research by making complex ecological patterns understandable and actionable.
+      This project visualizes the intersection of climate change and wildfire trends in California and Georgia by combining environmental data with geospatial mapping, and full-stack web development. It uses NASA MODIS indices, NOAA climate data, and Google Earth Engine to build a live dashboard that allows users to explore regional temperature, drought severity, and fire frequency over time. Through dynamic graphing and data storytelling, the project highlights how computer science empowers environmental research by making complex ecological patterns understandable and actionable.
     </p>
   </section>
 
@@ -292,11 +303,12 @@
     <h2 class="section-title">Behind the Scenes</h2>
     <p class="section-caption">Technologies, data processing, and design strategies powering the dashboard.</p>
     <p style="max-width: 800px; margin: auto; text-align: center;">
-      The project was built with Python (Dash, Flask, Pandas, Scikit-learn), Folium for mapping, Plotly for interactive visualizations, Google Earth Engine for satellite data, and Heroku for deployment. Custom callbacks, dynamic filtering, and integrated ML models ensure the user experience remains both responsive and scientifically grounded.
+      The project was built with Python (Dash, Flask, Pandas), Folium for mapping, Plotly for interactive visualizations, Google Earth Engine for satellite data, and Heroku for deployment. Custom callbacks, dynamic filtering to ensure the user experience remains both responsive and scientifically grounded.
     </p>
-    <!-- Logos Row 1 -->
+    <!-- Logos Grid -->
     <div style="background: #fff; border-radius: 15px; padding: 24px 10px; margin: 32px auto 0 auto; max-width: 600px;">
-      <div style="display: flex; justify-content: center; gap: 40px; flex-wrap: nowrap; margin-bottom: 20px;">
+      <!-- Top row: 4 logos -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 24px; justify-items: center; margin-bottom: 20px;">
         <div style="text-align: center;">
           <img src="/static/python-logo.jpg" alt="Python Logo" class="logo">
           <p style="margin-top: 8px; color: #222;">Python</p>
@@ -310,12 +322,13 @@
           <p style="margin-top: 8px; color: #222;">Plotly</p>
         </div>
         <div style="text-align: center;">
-          <img src="/static/scikit-logo.png" alt="Scikit-learn Logo" class="logo">
-          <p style="margin-top: 8px; color: #222;">Scikit-learn</p>
+          <img src="/static/pandas-logo.png" alt="Pandas Logo" class="logo">
+          <p style="margin-top: 8px; color: #222;">Pandas</p>
         </div>
       </div>
-      <!-- Logos Row 2 -->
-      <div style="display: flex; justify-content: center; gap: 40px; flex-wrap: nowrap; margin-bottom: 20px;">
+
+      <!-- Bottom row: 4 logos -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 24px; justify-items: center;">
         <div style="text-align: center;">
           <img src="/static/heroku logo.jpg" alt="Heroku Logo" class="logo">
           <p style="margin-top: 8px; color: #222;">Heroku</p>
@@ -329,8 +342,8 @@
           <p style="margin-top: 8px; color: #222;">Folium</p>
         </div>
         <div style="text-align: center;">
-          <img src="/static/pandas-logo.png" alt="Pandas Logo" class="logo">
-          <p style="margin-top: 8px; color: #222;">Pandas</p>
+          <img src="/static/numpy-logo.png" alt="NumPy Logo" class="logo">
+          <p style="margin-top: 8px; color: #222;">NumPy</p>
         </div>
       </div>
     </div>
@@ -339,12 +352,11 @@
   <!-- KEY FINDINGS SECTION -->
   <section id="findings" data-aos="fade-up">
     <h2 class="section-title">Key Findings</h2>
-    <p class="section-caption">Major discoveries through data exploration and modeling.</p>
+    <p class="section-caption">Major discoveries through data exploration.</p>
     <p style="max-width: 800px; margin: auto; text-align: center;">
       - California experienced a noticeable rise in average annual temperature between 1980 and 2022.<br>
       - Drought severity showed strong correlations with fire frequency, especially during prolonged dry periods.<br>
       - Vegetation health indices like NDVI declined in regions experiencing recurring wildfire events.<br>
-      - Machine learning models confirmed humidity and drought conditions as significant predictors for wildfire risk.
     </p>
   </section>
 
@@ -379,6 +391,22 @@
     </ul>
   </section>
 
+  <!-- FUTURE DIRECTIONS SECTION -->
+  <section id="future" data-aos="fade-up">
+    <h2 class="section-title">Future Directions</h2>
+    <p class="section-caption">Exploring next steps in climate-tech applications.</p>
+    <p style="max-width: 800px; margin: auto; text-align: center;">
+      Building upon this dashboard, future versions can integrate machine learning prediction models to forecast wildfire outbreaks and monitor biodiversity changes over time using real-time satellite inputs. Expanding regional interactivity, users could toggle between ecological zones and compare projected impacts of droughts, temperature shifts, or vegetation loss. Ideas include:
+    </p>
+    <ul style="max-width: 800px; margin: 2rem auto; padding-left: 20px; line-height: 1.8;">
+      <li>🔥 Predicting fire-prone regions based on past fire events and climate conditions</li>
+      <li>🌱 Monitoring biodiversity shifts using satellite and field-observed species data</li>
+      <li>🛰️ Pulling live NDVI and EVI feeds to display current vegetation health on the map</li>
+      <li>📈 Developing anomaly detection for abrupt ecosystem changes via time-series forecasting</li>
+      <li>📍Adding interactive choropleth maps with ecological layer toggles</li>
+    </ul>
+  </section>
+
   <!-- PLOTLY QUICK START TUTORIAL SECTION -->
   <section id="tutorial" data-aos="fade-up">
     <h2 class="section-title">Quick Start: Creating a Plotly Graph</h2>
@@ -407,7 +435,7 @@ fig.show()
 
   <!-- CONTACT FOOTER SECTION -->
   <footer id="contact" data-aos="fade-up">
-    <p>Created by Dylan Wood | Powered by NASA, GEE, USDM, MODIS, ERA5, and USGS</p>
+    <p>Created by Dylan Wood - dwood19@student.highlands.edu | Powered by NASA, GEE, USDM, and NOOA</p>
   </footer>
 
   <!-- JAVASCRIPT -->
