@@ -1,1 +1,1 @@
-web: gunicorn ClimateChangeData:server
+web: gunicorn app:server
