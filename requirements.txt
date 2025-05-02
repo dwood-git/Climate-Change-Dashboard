@@ -68,4 +68,4 @@ wcwidth==0.2.13
 Werkzeug==2.0.3
 xyzservices==2025.1.0
 zipp==3.21.0
-dash-leaflet==1.0.12
+dash-leaflet==1.0.11
