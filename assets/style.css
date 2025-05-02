@@ -122,3 +122,16 @@ footer {
 .section-light p {
   color: #333333;
 }
+
+/* Smooth hide/show animation for navigation bar on scroll */
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  transition: top 0.3s ease-in-out;
+}
+
+.navbar-hidden {
+  top: -80px; /* adjust based on nav height */
+}

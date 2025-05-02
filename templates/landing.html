@@ -43,6 +43,7 @@
     nav {
       position: fixed;
       top: 0;
+      transition: top 0.3s;
       width: 100%;
       background: rgba(0, 0, 0, 0.7);
       padding: 1rem;
@@ -239,6 +240,22 @@
       scroll-padding-top: 70px;
     }
   </style>
+  <script>
+    let lastScrollTop = 0;
+    const navbar = document.querySelector("nav");
+
+    window.addEventListener("scroll", function () {
+      let currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+      if (currentScroll > lastScrollTop) {
+        // Scrolling down
+        navbar.style.top = "-80px";
+      } else {
+        // Scrolling up
+        navbar.style.top = "0";
+      }
+      lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
+    });
+  </script>
 </head>
 <body>
   <button onclick="topFunction()" id="topBtn" title="Back to top">↑</button>
