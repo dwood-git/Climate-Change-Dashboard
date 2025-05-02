@@ -25,12 +25,17 @@ fig_trends = html.Div([
             "Visualizing yearly average temperatures and climate trends (1980–2022) for Georgia and California.",
             className="graph-subtitle"
         ),
+    ], style={"marginBottom": "10px", "marginTop": "-30px"}),
 
         html.Div([
             html.H3("Georgia Temperature", className="graph-title"),
             dcc.Loading(
                 dcc.Graph(figure=build_georgia_temperature_graph(df_ga), config={'displayModeBar': False}),
                 type="circle"
+            ),
+            html.P(
+                "This graph shows Georgia's average yearly temperature from 1980 to 2022, highlighting changes over time.",
+                className="graph-subtitle"
             ),
         ], className="graph-card"),
 
@@ -40,6 +45,10 @@ fig_trends = html.Div([
                 dcc.Graph(figure=build_california_temperature_graph(df_ca), config={'displayModeBar': False}),
                 type="circle"
             ),
+            html.P(
+                "This graph displays California's yearly average temperature, showing warming trends and variability.",
+                className="graph-subtitle"
+            ),
         ], className="graph-card"),
 
         html.Div([
@@ -47,6 +56,10 @@ fig_trends = html.Div([
             dcc.Loading(
                 dcc.Graph(figure=build_georgia_precip_graph(df_ga_precip), config={'displayModeBar': False}),
                 type="circle"
+            ),
+            html.P(
+                "This chart represents Georgia's average annual rainfall, helping us understand water availability trends.",
+                className="graph-subtitle"
             ),
         ], className="graph-card"),
 
@@ -56,9 +69,12 @@ fig_trends = html.Div([
                 dcc.Graph(figure=build_california_precip_graph(df_ca_precip), config={'displayModeBar': False}),
                 type="circle"
             ),
+            html.P(
+                "This chart shows California's annual rainfall, which can influence droughts and wildfires.",
+                className="graph-subtitle"
+            ),
         ], className="graph-card"),
     ], className="section-light")
-])
 
 veg_df = pd.read_csv("data/vegetation/Vegetation_Index_California_Georgia.csv")
 fig_veg = html.Div([
@@ -68,6 +84,10 @@ fig_veg = html.Div([
             dcc.Graph(figure=build_ndvi_graph(veg_df), config={'displayModeBar': False}),
             type="circle"
         ),
+        html.P(
+            "NDVI (Normalized Difference Vegetation Index) shows how green and healthy the vegetation is.",
+            className="graph-subtitle"
+        ),
     ], className="graph-card"),
 
     html.Div([
@@ -75,6 +95,10 @@ fig_veg = html.Div([
         dcc.Loading(
             dcc.Graph(figure=build_evi_graph(veg_df), config={'displayModeBar': False}),
             type="circle"
+        ),
+        html.P(
+            "EVI (Enhanced Vegetation Index) helps us measure plant health more clearly through thick canopies or haze.",
+            className="graph-subtitle"
         ),
     ], className="graph-card"),
 
@@ -110,6 +134,10 @@ fig_corr = html.Div([
             ),
             type="circle"
         ),
+        html.P(
+            "This chart shows how drought levels changed in Georgia and California over time.",
+            className="graph-subtitle"
+        ),
     ], className="graph-card"),
 
     html.Div([
@@ -118,6 +146,10 @@ fig_corr = html.Div([
             dcc.Graph(figure=build_drought_heatmap(drought_df), config={'displayModeBar': False}),
             type="circle"
         ),
+        html.P(
+            "The heatmap gives a year-by-year overview of drought severity in both states.",
+            className="graph-subtitle"
+        ),
     ], className="graph-card"),
 
     html.Div([
@@ -125,6 +157,10 @@ fig_corr = html.Div([
         dcc.Loading(
             dcc.Graph(figure=build_correlation_heatmap(ml_df), config={'displayModeBar': False}),
             type="circle"
+        ),
+        html.P(
+            "This matrix shows how different climate variables like vegetation and fires relate to each other.",
+            className="graph-subtitle"
         ),
     ], className="graph-card"),
 
@@ -179,7 +215,10 @@ fig_corr = html.Div([
             dcc.Graph(id='bubble-chart-california', config={'displayModeBar': False}),
             type="circle"
         ),
-        
+        html.P(
+            "Each bubble shows vegetation, drought, and fire data for a specific year in California. Bigger and darker bubbles mean more fires.",
+            className="graph-subtitle"
+        ),
         html.Div(id='info-panel', style={'textAlign': 'center', 'marginTop': '10px', 'fontSize': '14px', 'color': '#333'})
     ], className="graph-card"),
 
@@ -189,12 +228,16 @@ fig_corr = html.Div([
             dcc.Graph(id='fire-severity-bubble', config={'displayModeBar': False}),
             type="circle"
         ),
+        html.P(
+            "This timeline chart shows how vegetation and fire severity changed year by year in California.",
+            className="graph-subtitle"
+        ),
     ], className="graph-card"),
 
     html.Div([
         html.H3("California Wildfire Frequency Map (2001–2022)", className="graph-title"),
         html.Iframe(
-            srcDoc=open("assets/maps/california_fire_map.html", "r").read(),
+            srcDoc=open("assets/california_fire_map.html", "r").read(),
             width="100%",
             height="600",
             style={

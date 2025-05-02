@@ -21,11 +21,15 @@ def render_tab_content(tab):
         return html.Div([
             html.Div([
                 html.H4("Temperature Trends", className="graph-subtitle"),
+                html.P("This graph shows average yearly temperatures in Georgia and California based on NOAA data from 1980 to 2022. ", style={"textAlign": "center", "fontSize": "14px"}),
+                html.A("Dataset: GA & CA Avg Temps (NOAA)", href="https://www.ncei.noaa.gov", target="_blank", style={"textAlign": "center", "display": "block", "marginBottom": "20px", "fontSize": "13px"}),
                 dcc.Graph(figure=fig_ga, config={"responsive": True}, style={"marginBottom": "40px"}),
                 dcc.Graph(figure=fig_ca, config={"responsive": True})
             ]),
             html.Div([
                 html.H4("Precipitation Trends", className="graph-subtitle"),
+                html.P("Displays yearly precipitation averages, helping assess long-term wet and dry trends in each state.", style={"textAlign": "center", "fontSize": "14px"}),
+                html.A("Dataset: GA & CA Avg Precipitation (NOAA)", href="https://www.ncei.noaa.gov", target="_blank", style={"textAlign": "center", "display": "block", "marginBottom": "20px", "fontSize": "13px"}),
                 dcc.Graph(figure=fig_precip_ga, config={"responsive": True}, style={"marginBottom": "40px"}),
                 dcc.Graph(figure=fig_precip_ca, config={"responsive": True})
             ])
@@ -33,6 +37,8 @@ def render_tab_content(tab):
     elif tab == "veg":
         return html.Div([
             html.H4("NDVI vs EVI and Fire Count Bubble Chart", className="graph-subtitle"),
+            html.P("Visualizes vegetation health vs fire frequency using NASA MODIS indices. Larger bubbles = more fires.", style={"textAlign": "center", "fontSize": "14px"}),
+            html.A("Dataset: MODIS Vegetation Indices + Cal Fire Archive", href="https://modis.gsfc.nasa.gov/data/dataprod/mod13.php", target="_blank", style={"textAlign": "center", "display": "block", "marginBottom": "20px", "fontSize": "13px"}),
             dcc.Graph(
                 id="ndvi-bubble-chart",
                 figure=fig_ndvi_bubble,
