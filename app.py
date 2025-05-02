@@ -27,58 +27,70 @@ fig_trends = html.Div([
         ),
     ], style={"marginBottom": "10px", "marginTop": "-70px"}),
 
-        html.Div([
-            html.H3("Georgia Temperature", className="graph-title"),
-            dcc.Loading(
+    html.Div([
+        html.H3("Georgia Temperature", className="graph-title"),
+        dcc.Loading(
+            html.Div(
                 dcc.Graph(figure=build_georgia_temperature_graph(df_ga), config={'displayModeBar': False}),
-                type="circle"
+                className="graph-container"
             ),
-            html.P(
-                "This graph shows Georgia's average yearly temperature from 1980 to 2022, highlighting changes over time.",
-                className="graph-subtitle"
-            ),
-            html.A("View dataset (NOAA Climate Data)", href="https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/statewide/time-series", target="_blank", style={"display": "block", "textAlign": "center", "marginBottom": "20px", "fontSize": "14px", "color": "#1a73e8"})
-        ], className="graph-card"),
+            type="circle"
+        ),
+        html.P(
+            "This graph shows Georgia's average yearly temperature from 1980 to 2022, highlighting changes over time.",
+            className="graph-subtitle"
+        ),
+        html.A("View dataset (NOAA Climate Data)", href="https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/statewide/time-series", target="_blank", style={"display": "block", "textAlign": "center", "marginBottom": "20px", "fontSize": "14px", "color": "#1a73e8"})
+    ], className="graph-card"),
 
-        html.Div([
-            html.H3("California Temperature", className="graph-title"),
-            dcc.Loading(
+    html.Div([
+        html.H3("California Temperature", className="graph-title"),
+        dcc.Loading(
+            html.Div(
                 dcc.Graph(figure=build_california_temperature_graph(df_ca), config={'displayModeBar': False}),
-                type="circle"
+                className="graph-container"
             ),
-            html.P(
-                "This graph displays California's yearly average temperature, showing warming trends and variability.",
-                className="graph-subtitle"
-            ),
-            html.A("View dataset (NOAA Climate Data)", href="https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/statewide/time-series", target="_blank", style={"display": "block", "textAlign": "center", "marginBottom": "20px", "fontSize": "14px", "color": "#1a73e8"})
-        ], className="graph-card"),
+            type="circle"
+        ),
+        html.P(
+            "This graph displays California's yearly average temperature, showing warming trends and variability.",
+            className="graph-subtitle"
+        ),
+        html.A("View dataset (NOAA Climate Data)", href="https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/statewide/time-series", target="_blank", style={"display": "block", "textAlign": "center", "marginBottom": "20px", "fontSize": "14px", "color": "#1a73e8"})
+    ], className="graph-card"),
 
-        html.Div([
-            html.H3("Georgia Precipitation", className="graph-title"),
-            dcc.Loading(
+    html.Div([
+        html.H3("Georgia Precipitation", className="graph-title"),
+        dcc.Loading(
+            html.Div(
                 dcc.Graph(figure=build_georgia_precip_graph(df_ga_precip), config={'displayModeBar': False}),
-                type="circle"
+                className="graph-container"
             ),
-            html.P(
-                "This chart represents Georgia's average annual rainfall, helping us understand water availability trends.",
-                className="graph-subtitle"
-            ),
-            html.A("View dataset (NOAA Climate Data)", href="https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/statewide/time-series", target="_blank", style={"display": "block", "textAlign": "center", "marginBottom": "20px", "fontSize": "14px", "color": "#1a73e8"})
-        ], className="graph-card"),
+            type="circle"
+        ),
+        html.P(
+            "This chart represents Georgia's average annual rainfall, helping us understand water availability trends.",
+            className="graph-subtitle"
+        ),
+        html.A("View dataset (NOAA Climate Data)", href="https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/statewide/time-series", target="_blank", style={"display": "block", "textAlign": "center", "marginBottom": "20px", "fontSize": "14px", "color": "#1a73e8"})
+    ], className="graph-card"),
 
-        html.Div([
-            html.H3("California Precipitation", className="graph-title"),
-            dcc.Loading(
+    html.Div([
+        html.H3("California Precipitation", className="graph-title"),
+        dcc.Loading(
+            html.Div(
                 dcc.Graph(figure=build_california_precip_graph(df_ca_precip), config={'displayModeBar': False}),
-                type="circle"
+                className="graph-container"
             ),
-            html.P(
-                "This chart shows California's annual rainfall, which can influence droughts and wildfires.",
-                className="graph-subtitle"
-            ),
-            html.A("View dataset (NOAA Climate Data)", href="https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/statewide/time-series", target="_blank", style={"display": "block", "textAlign": "center", "marginBottom": "20px", "fontSize": "14px", "color": "#1a73e8"})
-        ], className="graph-card"),
-    ], className="section-light")
+            type="circle"
+        ),
+        html.P(
+            "This chart shows California's annual rainfall, which can influence droughts and wildfires.",
+            className="graph-subtitle"
+        ),
+        html.A("View dataset (NOAA Climate Data)", href="https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/statewide/time-series", target="_blank", style={"display": "block", "textAlign": "center", "marginBottom": "20px", "fontSize": "14px", "color": "#1a73e8"})
+    ], className="graph-card"),
+], className="section-light")
 
 veg_df = pd.read_csv("data/vegetation/Vegetation_Index_California_Georgia.csv")
 fig_veg = html.Div([
@@ -92,7 +104,10 @@ fig_veg = html.Div([
     html.Div([
         html.H3("NDVI Line Chart", className="graph-title"),
         dcc.Loading(
-            dcc.Graph(figure=build_ndvi_graph(veg_df), config={'displayModeBar': False}),
+            html.Div(
+                dcc.Graph(figure=build_ndvi_graph(veg_df), config={'displayModeBar': False}),
+                className="graph-container"
+            ),
             type="circle"
         ),
         html.P(
@@ -105,7 +120,10 @@ fig_veg = html.Div([
     html.Div([
         html.H3("EVI Line Chart", className="graph-title"),
         dcc.Loading(
-            dcc.Graph(figure=build_evi_graph(veg_df), config={'displayModeBar': False}),
+            html.Div(
+                dcc.Graph(figure=build_evi_graph(veg_df), config={'displayModeBar': False}),
+                className="graph-container"
+            ),
             type="circle"
         ),
         html.P(
@@ -147,10 +165,13 @@ fig_corr = html.Div([
     html.Div([
         html.H3("Drought Severity Over Time (GA vs CA)", className="graph-title"),
         dcc.Loading(
-            dcc.Graph(
-                id='drought-line-chart',
-                figure=build_drought_line_graph(drought_df),
-                config={'displayModeBar': False}
+            html.Div(
+                dcc.Graph(
+                    id='drought-line-chart',
+                    figure=build_drought_line_graph(drought_df),
+                    config={'displayModeBar': False}
+                ),
+                className="graph-container"
             ),
             type="circle"
         ),
@@ -164,7 +185,10 @@ fig_corr = html.Div([
     html.Div([
         html.H3("Drought Severity Heatmap", className="graph-title"),
         dcc.Loading(
-            dcc.Graph(figure=build_drought_heatmap(drought_df), config={'displayModeBar': False}),
+            html.Div(
+                dcc.Graph(figure=build_drought_heatmap(drought_df), config={'displayModeBar': False}),
+                className="graph-container"
+            ),
             type="circle"
         ),
         html.P(
@@ -177,7 +201,10 @@ fig_corr = html.Div([
     html.Div([
         html.H3("Climate Feature Correlation Matrix", className="graph-title"),
         dcc.Loading(
-            dcc.Graph(figure=build_correlation_heatmap(ml_df), config={'displayModeBar': False}),
+            html.Div(
+                dcc.Graph(figure=build_correlation_heatmap(ml_df), config={'displayModeBar': False}),
+                className="graph-container"
+            ),
             type="circle"
         ),
         html.P(
@@ -235,7 +262,10 @@ fig_corr = html.Div([
         ),
         html.Div(id='fire-risk-badge', style={'textAlign': 'center', 'fontSize': '18px', 'marginTop': '10px', 'fontWeight': 'bold', 'color': '#d62728'}),
         dcc.Loading(
-            dcc.Graph(id='bubble-chart-california', config={'displayModeBar': False}),
+            html.Div(
+                dcc.Graph(id='bubble-chart-california', config={'displayModeBar': False}),
+                className="graph-container"
+            ),
             type="circle"
         ),
         html.P(
@@ -249,7 +279,10 @@ fig_corr = html.Div([
     html.Div([
         html.H3("Fire Severity Bubble Timeline (California)", className="graph-title"),
         dcc.Loading(
-            dcc.Graph(id='fire-severity-bubble', config={'displayModeBar': False}),
+            html.Div(
+                dcc.Graph(id='fire-severity-bubble', config={'displayModeBar': False}),
+                className="graph-container"
+            ),
             type="circle"
         ),
         html.P(

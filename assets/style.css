@@ -135,3 +135,27 @@ footer {
 .navbar-hidden {
   top: -80px; /* adjust based on nav height */
 }
+
+/* Responsive Graph Styling for Mobile */
+@media (max-width: 768px) {
+  .graph-card {
+    padding: 10px;
+    margin: 20px 10px;
+  }
+
+  .js-plotly-plot {
+    width: 100% !important;
+    height: auto !important;
+  }
+
+  .graph-title,
+  .graph-subtitle {
+    font-size: 18px;
+    padding: 0 5px;
+  }
+
+  .nav-btn-container {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
