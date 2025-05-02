@@ -90,6 +90,20 @@ fig_trends = html.Div([
         ),
         html.A("View dataset (NOAA Climate Data)", href="https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/statewide/time-series", target="_blank", style={"display": "block", "textAlign": "center", "marginBottom": "20px", "fontSize": "14px", "color": "#1a73e8"})
     ], className="graph-card"),
+    # Down arrow navigation to Vegetation Indices
+    # Up arrow navigation back to Top
+    html.Div([
+        html.A("↑ Back to Top", href="#", style={
+            "display": "block",
+            "textAlign": "center",
+            "fontSize": "20px",
+            "marginTop": "40px",
+            "marginBottom": "20px",
+            "color": "#1a73e8",
+            "textDecoration": "none",
+            "fontWeight": "bold"
+        })
+    ])
 ], className="section-light")
 
 veg_df = pd.read_csv("data/vegetation/Vegetation_Index_California_Georgia.csv")
@@ -149,6 +163,20 @@ fig_veg = html.Div([
         ),
         html.Div(id="veg-map-display")
     ], className="graph-card"),
+    # Down arrow navigation to Climate Correlations
+    # Up arrow navigation back to Top
+    html.Div([
+        html.A("↑ Back to Top", href="#", style={
+            "display": "block",
+            "textAlign": "center",
+            "fontSize": "20px",
+            "marginTop": "40px",
+            "marginBottom": "20px",
+            "color": "#1a73e8",
+            "textDecoration": "none",
+            "fontWeight": "bold"
+        })
+    ])
 ], className="section-light")
 
 drought_df = pd.read_csv("data/drought/Drought_Severity_California_Georgia.csv")
@@ -182,6 +210,49 @@ fig_corr = html.Div([
         html.A("View dataset (US Drought Monitor)", href="https://droughtmonitor.unl.edu/DmData/DataDownload.aspx", target="_blank", style={"display": "block", "textAlign": "center", "marginBottom": "20px", "fontSize": "14px", "color": "#1a73e8"})
     ], className="graph-card"),
 
+    # Move the California bubble chart block here
+    html.Div([
+        html.H3("NDVI, Drought, and Fires (California Only)", className="graph-title"),
+        dcc.Slider(
+            id='year-slider',
+            min=2001,
+            max=2022,
+            step=1,
+            value=2010,
+            marks={year: str(year) for year in range(2001, 2023)},
+        ),
+        html.Button(
+            "Show All Years",
+            id="reset-year-btn",
+            n_clicks=0,
+            style={
+                'marginTop': '10px',
+                'marginBottom': '10px',
+                'backgroundColor': '#e0e0e0',
+                'color': '#222',
+                'fontFamily': 'Arial, sans-serif',
+                'borderRadius': '8px',
+                'border': '1px solid #bbb',
+                'padding': '6px 20px',
+                'fontWeight': 'bold'
+            }
+        ),
+        html.Div(id='fire-risk-badge', style={'textAlign': 'center', 'fontSize': '18px', 'marginTop': '10px', 'fontWeight': 'bold', 'color': '#d62728'}),
+        dcc.Loading(
+            html.Div(
+                dcc.Graph(id='bubble-chart-california', config={'displayModeBar': False}),
+                className="graph-container"
+            ),
+            type="circle"
+        ),
+        html.P(
+            "Each bubble represents a year of data for California, plotting vegetation health (NDVI), drought severity, and fire count. Larger, darker bubbles indicate more fires. This visual helps uncover how vegetation loss and drought intensity may relate to wildfire activity over time.",
+            className="graph-subtitle"
+        ),
+        html.A("View dataset (California Fire Perimeters Data) (desktop only)", href="https://data.ca.gov/dataset/california-fire-perimeters-all/resource/b7dd3a39-2163-4a68-9c1a-98ef25d13147", target="_blank", style={"display": "block", "textAlign": "center", "marginBottom": "20px", "fontSize": "14px", "color": "#1a73e8"}),
+        html.Div(id='info-panel', style={'textAlign': 'center', 'marginTop': '10px', 'fontSize': '14px', 'color': '#333'})
+    ], className="graph-card"),
+
     html.Div([
         html.H3("Drought Severity Heatmap", className="graph-title"),
         dcc.Loading(
@@ -211,69 +282,7 @@ fig_corr = html.Div([
             "This correlation matrix helps identify how strongly climate variables like NDVI, EVI, fire count, and drought severity are related. A higher absolute value means a stronger correlation (positive or negative). It’s a helpful way to quickly see which features tend to change together.",
             className="graph-subtitle"
         ),
-        html.A("View dataset (California Fire Perimeters Data)", href="https://data.ca.gov/dataset/california-fire-perimeters-all/resource/b7dd3a39-2163-4a68-9c1a-98ef25d13147", target="_blank", style={"display": "block", "textAlign": "center", "marginBottom": "20px", "fontSize": "14px", "color": "#1a73e8"})
-    ], className="graph-card"),
-
-    html.Div([
-        html.H3("NDVI, Drought, and Fires (California Only)", className="graph-title"),
-        dcc.Slider(
-            id='year-slider',
-            min=2001,
-            max=2022,
-            step=1,
-            value=2010,
-            marks={year: str(year) for year in range(2001, 2023)},
-        ),
-        html.Button(
-            "Show All Years",
-            id="reset-year-btn",
-            n_clicks=0,
-            style={
-                'marginTop': '10px',
-                'marginBottom': '10px',
-                'backgroundColor': '#e0e0e0',
-                'color': '#222',
-                'fontFamily': 'Arial, sans-serif',
-                'borderRadius': '8px',
-                'border': '1px solid #bbb',
-                'padding': '6px 20px',
-                'fontWeight': 'bold'
-            }
-        ),
-        dcc.Dropdown(
-            id='bubble-axis-selector',
-            options=[
-                {'label': 'NDVI vs DroughtSeverity', 'value': 'ndvi_drought'},
-                {'label': 'EVI vs FireCount', 'value': 'evi_fire'},
-                {'label': 'Temperature vs Drought', 'value': 'temp'}
-            ],
-            value='ndvi_drought',
-            clearable=False,
-            style={'width': '300px', 'margin': '10px auto'}
-        ),
-        dcc.Dropdown(
-            id='bubble-color-metric',
-            options=[
-                {'label': 'Fires Occured', 'value': 'FireCount'}
-            ],
-            value='FireCount',
-            clearable=False,
-            style={'width': '200px', 'margin': '10px auto'}
-        ),
-        html.Div(id='fire-risk-badge', style={'textAlign': 'center', 'fontSize': '18px', 'marginTop': '10px', 'fontWeight': 'bold', 'color': '#d62728'}),
-        dcc.Loading(
-            html.Div(
-                dcc.Graph(id='bubble-chart-california', config={'displayModeBar': False}),
-                className="graph-container"
-            ),
-            type="circle"
-        ),
-        html.P(
-            "Each bubble represents a year of data for California, plotting vegetation health (NDVI), drought severity, and fire count. Larger, darker bubbles indicate more fires. This visual helps uncover how vegetation loss and drought intensity may relate to wildfire activity over time.",
-            className="graph-subtitle"
-        ),
-        html.A("View dataset (California Fire Perimeters Data)", href="https://data.ca.gov/dataset/california-fire-perimeters-all/resource/b7dd3a39-2163-4a68-9c1a-98ef25d13147", target="_blank", style={"display": "block", "textAlign": "center", "marginBottom": "20px", "fontSize": "14px", "color": "#1a73e8"}),
-        html.Div(id='info-panel', style={'textAlign': 'center', 'marginTop': '10px', 'fontSize': '14px', 'color': '#333'})
+        html.A("View dataset (California Fire Perimeters Data) (desktop only)", href="https://data.ca.gov/dataset/california-fire-perimeters-all/resource/b7dd3a39-2163-4a68-9c1a-98ef25d13147", target="_blank", style={"display": "block", "textAlign": "center", "marginBottom": "20px", "fontSize": "14px", "color": "#1a73e8"})
     ], className="graph-card"),
 
     html.Div([
@@ -289,8 +298,9 @@ fig_corr = html.Div([
             "This timeline chart shows how vegetation and fire severity changed year by year in California.",
             className="graph-subtitle"
         ),
-        html.A("View dataset (California Fire Perimeters Data)", href="https://data.ca.gov/dataset/california-fire-perimeters-all/resource/b7dd3a39-2163-4a68-9c1a-98ef25d13147", target="_blank", style={"display": "block", "textAlign": "center", "marginBottom": "20px", "fontSize": "14px", "color": "#1a73e8"})
+        html.A("View dataset (California Fire Perimeters Data) (desktop only)", href="https://data.ca.gov/dataset/california-fire-perimeters-all/resource/b7dd3a39-2163-4a68-9c1a-98ef25d13147", target="_blank", style={"display": "block", "textAlign": "center", "marginBottom": "20px", "fontSize": "14px", "color": "#1a73e8"})
     ], className="graph-card"),
+
 
     html.Div([
         html.H3("California Wildfire Frequency Map (2001–2022)", className="graph-title"),
@@ -300,14 +310,13 @@ fig_corr = html.Div([
             height="600",
             style={
                 'border': 'none',
-                'marginTop': '20px',
-                'boxShadow': '0 4px 16px rgba(0,0,0,0.08)',
                 'borderRadius': '12px',
-                'display': 'block'
+                'marginTop': '20px',
+                'boxShadow': '0 4px 16px rgba(0,0,0,0.08)'
             }
         ),
         html.P(
-            "This interactive map overlays fire frequency across California, highlighting regions with repeated wildfire events from 2001 to 2022.",
+            "This interactive map shows cumulative wildfire frequency in California from 2001 to 2022.",
             style={
                 'textAlign': 'center',
                 'fontFamily': 'Arial, sans-serif',
@@ -317,18 +326,7 @@ fig_corr = html.Div([
                 'marginTop': '10px',
                 'marginBottom': '30px'
             }
-        ),
-         html.Pre("""// GEE MODIS Burned Area (California)
-var burned = ee.ImageCollection("MODIS/061/MCD64A1")
-  .filterDate("2001-01-01", "2022-12-31")
-  .select("BurnDate")
-  .mean()
-  .clip(ee.FeatureCollection("TIGER/2018/States")
-         .filter(ee.Filter.eq("NAME", "California")));
-Map.centerObject(burned, 6);
-Map.addLayer(burned, {min: 0, max: 366, palette: ['ffffff', 'ff0000']}, "Burned Area");""",
-            style={"backgroundColor": "#f4f4f4", "padding": "10px", "borderRadius": "8px", "fontSize": "13px", "overflowX": "auto", "color": "#000000"}),
-        html.A("View dataset (MODIS Burned Area - MCD64A1 v6.1)", href="https://lpdaac.usgs.gov/products/mcd64a1v061/", target="_blank", style={"display": "block", "textAlign": "center", "marginBottom": "20px", "fontSize": "14px", "color": "#1a73e8"}),
+        )
     ], className="graph-card"),
 
     html.Div([
@@ -378,6 +376,20 @@ Map.addLayer(burned, {min: 0, max: 366, palette: ['ffffff', 'ff0000']}, "Burned 
             }
         )
     ], className="graph-card"),
+    # Down arrow navigation back to Trends (cycle)
+    # Up arrow navigation back to Top
+    html.Div([
+        html.A("↑ Back to Top", href="#", style={
+            "display": "block",
+            "textAlign": "center",
+            "fontSize": "20px",
+            "marginTop": "40px",
+            "marginBottom": "20px",
+            "color": "#1a73e8",
+            "textDecoration": "none",
+            "fontWeight": "bold"
+        })
+    ])
 ], className="section-light")
 
 app.layout = html.Div([
@@ -400,8 +412,22 @@ app.layout = html.Div([
         'boxShadow': '0 2px 8px rgba(0,0,0,0.03)'
     }),
 
+    # Go Back to Home Page button
+    html.Div([
+        html.A("← Back to Home Page", href="/home", style={
+            'display': 'block',
+            'textAlign': 'center',
+            'fontSize': '16px',
+            'marginTop': '40px',
+            'marginBottom': '10px',
+            'color': '#1a73e8',
+            'textDecoration': 'none',
+            'fontWeight': 'bold'
+        })
+    ]),
+
     html.Footer(
-        "Built by Dylan Wood | Data sources: NASA, USGS, ERA5, USDM | Honors Project 2025",
+        "Built by Dylan Wood | Data sources: NASA, USDM, NOOA, GEE, CAGOV | Honors Project 2025",
         style={
             'textAlign': 'center',
             'fontSize': '13px',
@@ -439,28 +465,28 @@ def render_tab(tab):
     return html.Div("Select a view above.")
 
 
+
 # Callback for California-only bubble chart with year slider and reset button + Fire Risk Badge update
 @app.callback(
     [Output("bubble-chart-california", "figure"),
      Output("fire-risk-badge", "children")],
     [Input("year-slider", "value"),
-     Input("reset-year-btn", "n_clicks"),
-     Input("bubble-color-metric", "value")]
+     Input("reset-year-btn", "n_clicks")]
 )
-def update_bubble_chart(year, reset_clicks, color_metric):
+def update_bubble_chart(year, reset_clicks):
+    color_metric = "FireCount"
+    ca_df = ml_df[ml_df["State"] == "California"]
     if ctx.triggered_id == "reset-year-btn":
-        filtered_df = ml_df[ml_df["State"] == "California"]
+        filtered_df = ca_df
     else:
-        filtered_df = ml_df[(ml_df["Year"] == year) & (ml_df["State"] == "California")]
-
-    color_scale = "Reds" if color_metric == "FireCount" else "YlOrRd"
+        filtered_df = ca_df[ca_df["Year"] == year]
 
     fig = px.scatter(
         filtered_df,
         x="NDVI",
         y="DroughtSeverity",
         size="FireCount",
-        color=color_metric,
+        color="FireCount",
         color_continuous_scale=[
             "#FFFFCC", "#FFEDA0", "#FED976", "#FEB24C", "#FD8D3C",
             "#FC4E2A", "#E31A1C", "#BD0026", "#800026"
@@ -472,7 +498,7 @@ def update_bubble_chart(year, reset_clicks, color_metric):
             "DroughtSeverity": "Drought Severity Index",
             "FireCount": "Fires Occurred",
             "Temperature": "Temperature (°F)",
-            color_metric: "Fires Occurred" if color_metric == "FireCount" else color_metric
+            "FireCount": "Fires Occurred"
         }
     )
     fig.update_layout(
@@ -485,7 +511,6 @@ def update_bubble_chart(year, reset_clicks, color_metric):
 
     # Fire Risk Badge logic
     risk_text = ""
-    # Use mean values if multiple rows
     drought_mean = filtered_df["DroughtSeverity"].mean() if not filtered_df.empty else 0
     ndvi_mean = filtered_df["NDVI"].mean() if not filtered_df.empty else 1
     firecount_mean = filtered_df["FireCount"].mean() if not filtered_df.empty else 0
@@ -500,81 +525,15 @@ def update_bubble_chart(year, reset_clicks, color_metric):
     return fig, risk_text
 
 
-# Callback for linked line chart based on bubble chart selection and axis dropdown + info panel
+
+# Callback for linked bubble timeline chart: always show full CA data, info panel static
 @app.callback(
-    [Output("linked-line-chart", "figure"),
+    [Output("fire-severity-bubble", "figure"),
      Output("info-panel", "children")],
-    [Input("bubble-chart-california", "clickData"),
-     Input("bubble-axis-selector", "value")]
+    [Input("bubble-chart-california", "clickData")]
 )
-def update_linked_line(clicked_point, axis_type):
-    # If no point is selected, show a placeholder trend
-    if not clicked_point:
-        filtered = ml_df[ml_df["State"] == "California"]
-        state = "California"
-        year = None
-    else:
-        custom_data = clicked_point["points"][0].get("customdata", [])
-        if len(custom_data) >= 2:
-            state = custom_data[0]
-            year = custom_data[1]
-        else:
-            state = "California"
-            year = None
-        filtered = ml_df[(ml_df["State"] == state)]
-
-    if axis_type == "ndvi_drought":
-        y_val = "DroughtSeverity"
-        title = "Drought Severity Over Time"
-        x_val = "Year"
-    elif axis_type == "ndvi_temp":
-        y_val = "NDVI"
-        title = "NDVI Over Time"
-        x_val = "Year"
-    else:
-        y_val = "FireCount"
-        title = "FireCount Over Time"
-        x_val = "Year"
-
-    fig = px.line(filtered, x=x_val, y=y_val, title=title, markers=True)
-    fig.update_layout(
-        margin=dict(l=40, r=40, t=40, b=40),
-        title_font=dict(family="Arial, sans-serif", size=22, color="#000000"),
-        font=dict(family="Arial, sans-serif", color="#000000")
-    )
-
-    # Info panel content
-    info_text = "Select a bubble to see averages for that year."
-    if year is not None:
-        if isinstance(year, float) and not year.is_integer():
-            info_text = f"Invalid year format detected: {year}."
-            return fig, info_text
-        year_data = ml_df[(ml_df["Year"] == year) & (ml_df["State"] == "California")]
-        if not year_data.empty:
-            avg_ndvi = year_data["NDVI"].mean()
-            avg_firecount = year_data["FireCount"].mean()
-            avg_temp = year_data["Temperature"].mean()
-            info_text = f"Year {year} averages: NDVI = {avg_ndvi:.2f}, FireCount = {avg_firecount:.1f}, Temperature = {avg_temp:.1f}°F"
-        else:
-            info_text = f"No data available for year {year}."
-
-    return fig, info_text
-
-
-
-# Fire severity bubble chart timeline with dynamic color metric
-@app.callback(
-    Output("fire-severity-bubble", "figure"),
-    [Input("active-tab", "data"),
-     Input("bubble-axis-selector", "value"),
-     Input("bubble-color-metric", "value")]
-)
-def update_fire_severity_timeline(tab, axis_type, color_metric):
-    if tab != "correlations":
-        return px.scatter()
-
+def update_linked_line(_):
     df = ml_df[ml_df["State"] == "California"]
-
     fig = px.scatter(
         df,
         x="Year",
@@ -590,13 +549,13 @@ def update_fire_severity_timeline(tab, axis_type, color_metric):
             "NDVI": "NDVI (Vegetation Health)"
         }
     )
-
     fig.update_layout(
         margin=dict(l=40, r=40, t=40, b=40),
         title_font=dict(family="Arial, sans-serif", size=22),
         font=dict(family="Arial, sans-serif")
     )
-    return fig
+    info_text = "Select a bubble to see averages for that year."
+    return fig, info_text
 
 
 # Callback for Satellite Vegetation Comparison dropdown
@@ -607,6 +566,13 @@ def update_fire_severity_timeline(tab, axis_type, color_metric):
 def update_veg_maps(year):
     if year == "2001":
         return html.Div([
+            # Accessible, text-based NDVI color legend
+            html.Div([
+                html.H4("NDVI Color Key", style={"textAlign": "center", "color": "#000000", "marginBottom": "10px"}),
+                html.P("🟩 Green: Healthy/Dense Vegetation (NDVI > 0.6)", style={"textAlign": "center", "margin": "2px", "color": "#006400"}),
+                html.P("🟨 Yellow: Moderate Vegetation (NDVI ≈ 0.4–0.6)", style={"textAlign": "center", "margin": "2px", "color": "#DAA520"}),
+                html.P("⬜ White: Low or No Vegetation (NDVI < 0.2)", style={"textAlign": "center", "margin": "2px", "color": "#555555"}),
+            ], style={"marginBottom": "20px"}),
             html.Div([
                 html.H4("California (2001)", style={"textAlign": "center", "color": "#000000"}),
                 html.Img(src="/static/2001_NVDI_CA_Map.png", style={"width": "100%", "borderRadius": "12px"}),
@@ -640,6 +606,13 @@ Map.addLayer(ndvi, {min: 0, max: 8000, palette: ['ffffff', 'ffff00', '00aa00']},
         ])
     elif year == "2022":
         return html.Div([
+            # Accessible, text-based NDVI color legend
+            html.Div([
+                html.H4("NDVI Color Key", style={"textAlign": "center", "color": "#000000", "marginBottom": "10px"}),
+                html.P("🟩 Green: Healthy/Dense Vegetation (NDVI > 0.6)", style={"textAlign": "center", "margin": "2px", "color": "#006400"}),
+                html.P("🟨 Yellow: Moderate Vegetation (NDVI ≈ 0.4–0.6)", style={"textAlign": "center", "margin": "2px", "color": "#DAA520"}),
+                html.P("⬜ White: Low or No Vegetation (NDVI < 0.2)", style={"textAlign": "center", "margin": "2px", "color": "#555555"}),
+            ], style={"marginBottom": "20px"}),
             html.Div([
                 html.H4("California (2022)", style={"textAlign": "center", "color": "#000000"}),
                 html.Img(src="/static/2022_NVDI_CA_Map.png", style={"width": "100%", "borderRadius": "12px"}),
@@ -673,6 +646,13 @@ Map.addLayer(ndvi, {min: 0, max: 8000, palette: ['ffffff', 'ffff00', '00aa00']},
         ])
     else:  # Comparison view
         return html.Div([
+            # Accessible, text-based NDVI color legend
+            html.Div([
+                html.H4("NDVI Color Key", style={"textAlign": "center", "color": "#000000", "marginBottom": "10px"}),
+                html.P("🟩 Green: Healthy/Dense Vegetation (NDVI > 0.6)", style={"textAlign": "center", "margin": "2px", "color": "#006400"}),
+                html.P("🟨 Yellow: Moderate Vegetation (NDVI ≈ 0.4–0.6)", style={"textAlign": "center", "margin": "2px", "color": "#DAA520"}),
+                html.P("⬜ White: Low or No Vegetation (NDVI < 0.2)", style={"textAlign": "center", "margin": "2px", "color": "#555555"}),
+            ], style={"marginBottom": "20px"}),
             html.Div([
                 html.H4("California: 2001 vs 2022", style={"textAlign": "center", "color": "#000000"}),
                 html.Div([

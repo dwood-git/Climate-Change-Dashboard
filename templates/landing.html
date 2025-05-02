@@ -19,6 +19,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>The Living Pulse of Fire</title>
+  <meta property="og:image" content="/static/link-thumbnail.jpg">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Open+Sans&display=swap" rel="stylesheet">
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
@@ -163,6 +164,7 @@
     #topBtn:hover {
       background-color: #c7431b;
     }
+
     #contactBtn {
       position: fixed;
       bottom: 20px;
@@ -269,24 +271,7 @@
       scroll-padding-top: 70px;
     }
   </style>
-  <!--
-  <script>
-    let lastScrollTop = 0;
-    const navbar = document.querySelector("nav");
-
-    window.addEventListener("scroll", function () {
-      let currentScroll = window.pageYOffset || document.documentElement.scrollTop;
-      if (currentScroll > lastScrollTop) {
-        // Scrolling down
-        navbar.style.top = "-80px";
-      } else {
-        // Scrolling up
-        navbar.style.top = "0";
-      }
-      lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
-    });
-  </script>
-  -->
+  <!-- Navbar remains fixed, no scroll-hide behavior -->
 </head>
 <body>
   <button onclick="topFunction()" id="topBtn" title="Back to top">↑</button>
@@ -404,7 +389,7 @@
     <h2 class="section-title">Key Findings</h2>
     <p class="section-caption">Major discoveries through data exploration.</p>
     <p style="max-width: 800px; margin: auto; text-align: center;">
-      - California experienced a noticeable rise in average annual temperature between 1980 and 2022.<br>
+      - California and Georgia saw rising average annual temperatures over the period 1980–2022.<br>
       - Drought severity showed strong correlations with fire frequency, especially during prolonged dry periods.<br>
       - Vegetation health indices like NDVI declined in regions experiencing recurring wildfire events.<br>
     </p>
@@ -435,9 +420,27 @@
     <h2 class="section-title">Key Papers</h2>
     <p class="section-caption">Influential research guiding project methodology and analysis.</p>
     <ul style="max-width: 800px; margin: auto; padding-left: 20px; line-height: 1.8;">
-      <li>Hernandez, K. and Hoskins, A.B., 2024. <i>Machine learning algorithms applied to wildfire data in California's central valley.</i> Trees, Forests and People, 15, p.100516.</li>
-      <li>Giglio, L., Boschetti, L., Roy, D.P., et al., 2018. <i>The Collection 6 MODIS burned area mapping algorithm and product.</i> Remote Sensing of Environment.</li>
-      <li>U.S. Drought Monitor, NOAA and USDA collaboration, 2024. <i>Assessments of drought conditions across the United States.</i></li>
+      <li>
+        Hernandez, K., & Hoskins, A.B. (2024). 
+        <i>Machine learning algorithms applied to wildfire data in California's central valley.</i> 
+        <a href="https://doi.org/10.1016/j.tfp.2024.100516" target="_blank">Trees, Forests and People, 15, 100516</a>.
+        <br>
+        <small>This study explores machine learning models like decision trees and random forests to predict wildfire risks in California, using climate data and fire history to map fire-prone zones with improved accuracy.</small>
+      </li>
+      <li>
+        Giglio, L., Boschetti, L., Roy, D.P., Humber, M.L., & Justice, C.O. (2018). 
+        <i>The Collection 6 MODIS burned area mapping algorithm and product.</i> 
+        <a href="https://www.sciencedirect.com/science/article/pii/S0034425718303705" target="_blank">Remote Sensing of Environment, 217, 72–85</a>.
+        <br>
+        <small>This paper details enhancements in the MODIS Collection 6 satellite algorithm that detects and maps burned areas globally, offering improved spatial accuracy and reliability for fire detection via remote sensing.</small>
+      </li>
+      <li>
+        Abatzoglou, J.T., & Williams, A.P. (2016). 
+        <i>Impact of anthropogenic climate change on wildfire across western US forests.</i> 
+        <a href="https://www.pnas.org/doi/10.1073/pnas.1607171113" target="_blank">Proceedings of the National Academy of Sciences, 113(42), 11770–11775</a>.
+        <br>
+        <small>This landmark paper quantifies the influence of human-driven climate change on wildfires, showing that about half the increase in wildfire activity since 1984 is linked to warming and drying caused by emissions.</small>
+      </li>
     </ul>
   </section>
 
@@ -494,6 +497,22 @@ fig.show()
   <script>
     // Initialize AOS animations on page load
     AOS.init();
+</script>
+
+  <script>
+    function scrollToContact() {
+      const element = document.getElementById("contact");
+      const offset = -80;
+      const bodyRect = document.body.getBoundingClientRect().top;
+      const elementRect = element.getBoundingClientRect().top;
+      const elementPosition = elementRect - bodyRect;
+      const offsetPosition = elementPosition + offset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
+    }
   </script>
 
   <!-- Smooth Scrolling for Internal Links -->
@@ -527,20 +546,6 @@ fig.show()
     document.documentElement.scrollTop = 0;
   }
 
-  // Scroll to contact section when contact button is clicked
-  function scrollToContact() {
-    const element = document.getElementById("contact");
-    const offset = -80;
-    const bodyRect = document.body.getBoundingClientRect().top;
-    const elementRect = element.getBoundingClientRect().top;
-    const elementPosition = elementRect - bodyRect;
-    const offsetPosition = elementPosition + offset;
-
-    window.scrollTo({
-      top: offsetPosition,
-      behavior: 'smooth'
-    });
-  }
   </script>
 </body>
 </html>
