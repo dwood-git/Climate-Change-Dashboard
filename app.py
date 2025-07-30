@@ -53,6 +53,8 @@ def create_app():
     
     return server
 
+# Create the server instance for Heroku deployment
+server = create_app()
+
 if __name__ == "__main__":
-    app = create_app()
-    app.run(debug=True, port=8050)
+    server.run(debug=True, port=8050)
