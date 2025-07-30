@@ -287,9 +287,11 @@
 
   <header data-aos="fade-up" style="position: relative; overflow: hidden; height: 100vh;">
     <!-- Background video showing wildfire flames, muted and looping to add dynamic visual context -->
-    <video autoplay muted loop playsinline 
+    <video autoplay muted loop playsinline preload="auto"
            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1;">
       <source src="/static/fire.mp4" type="video/mp4">
+      <!-- Fallback for browsers that don't support video -->
+      <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(45deg, #ff6b35, #f7931e); z-index: -1;"></div>
     </video>
 
     <!-- Semi-transparent overlay to darken video for better text readability -->
