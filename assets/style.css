@@ -4,21 +4,61 @@
   Description: Defines global styling, section-specific theming, button interactions, graph card designs, and transition effects for the landing page and dashboard.
 */
 
+/* Global Dark Background */
+body {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(135deg, #000000, #1a1a1a, #000000);
+  background-attachment: fixed;
+  color: #ddd;
+  min-height: 100vh;
+}
+
+/* Header Section Styling */
+.header-section {
+  text-align: center;
+  padding: 20px 0;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 12px;
+  margin-bottom: 20px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.header-section h1 {
+  color: #ffffff;
+  font-size: 36px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.header-section p {
+  color: #cccccc;
+  font-size: 18px;
+  margin-bottom: 30px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
 /* Navigation Button Styling */
 .nav-btn {
-  background-color: #222;
+  background: linear-gradient(135deg, #333333, #555555);
   color: white;
-  border: none;
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 8px;
   padding: 10px 20px;
   transition: 0.3s;
+  margin: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 .nav-btn:hover {
-  background: linear-gradient(135deg, #333, #555);
+  background: linear-gradient(135deg, #444444, #666666);
   transform: scale(1.05);
   transition: 0.3s ease-in-out;
   z-index: 1;
   cursor: pointer;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
 }
 
 /* Navigation Button Container */
@@ -30,40 +70,57 @@
   margin: 20px auto;
 }
 
+/* Tab Content Container */
+.tab-content-container {
+  background: rgba(0, 0, 0, 0.4);
+  padding: 30px 15px;
+  margin: 30px auto;
+  border-radius: 16px;
+  max-width: 950px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
 /* Graph Card and Graph Title Styling */
 .graph-card {
-  background-color: #f8f8f8;
+  background: rgba(0, 0, 0, 0.5);
   padding: 20px;
   border-radius: 12px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
   margin: 30px auto;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .graph-subtitle {
-  color: #000000;
+  color: #ffffff;
   font-weight: 600;
   font-size: 16px;
   text-align: center;
-  /* margin-top: 10px; */
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
 }
 
 .graph-title {
-  color: #000000;
+  color: #ffffff;
   font-weight: 700;
   font-size: 24px;
   text-align: center;
   margin-bottom: 20px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 /* Section Background Themes */
 .section-light {
-  background-color: #f8f8f8;
+  background: rgba(0, 0, 0, 0.3);
   padding: 50px 0;
+  backdrop-filter: blur(10px);
 }
 .section-dark {
-  background-color: #1a1a1a;
+  background: rgba(0, 0, 0, 0.6);
   padding: 50px 0;
   color: white;
+  backdrop-filter: blur(10px);
 }
 
 /* Animation and Transition Effects */
@@ -80,32 +137,26 @@
 /* Heading Styles */
 h1 {
   font-size: 48px;
-  color: #f5f5f5;
+  color: #ffffff;
   font-weight: 700;
   margin-bottom: 20px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 h2 {
   font-size: 36px;
-  color: #e2e2e2;
+  color: #ffffff;
   font-weight: 600;
   margin-top: 30px;
   border-bottom: 4px solid #e25822;
   padding-bottom: 10px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 h3 {
   font-size: 28px;
-  color: #ccc;
+  color: #ffffff;
   font-weight: 500;
   margin-top: 20px;
-}
-
-/* Body and Base Styles */
-body {
-  font-family: 'Poppins', sans-serif;
-  margin: 0;
-  padding: 0;
-  background-color: #111;
-  color: #ddd;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
 }
 
 /* Footer Styles */
@@ -113,14 +164,23 @@ footer {
   text-align: center;
   padding: 20px;
   font-size: 14px;
-  color: grey;
+  color: #888888;
   margin-top: 50px;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
+
+/* Override section-light text colors for dark background */
 .section-light h1,
 .section-light h2,
 .section-light h3,
 .section-light p {
-  color: #333333;
+  color: #ffffff;
+}
+
+.section-light .graph-subtitle {
+  color: #cccccc;
 }
 
 /* Smooth hide/show animation for navigation bar on scroll */
@@ -130,6 +190,8 @@ footer {
   width: 100%;
   z-index: 1000;
   transition: top 0.3s ease-in-out;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(10px);
 }
 
 .navbar-hidden {
@@ -157,5 +219,18 @@ footer {
   .nav-btn-container {
     flex-direction: column;
     gap: 10px;
+  }
+  
+  .header-section h1 {
+    font-size: 28px;
+  }
+  
+  .header-section p {
+    font-size: 16px;
+  }
+  
+  .tab-content-container {
+    padding: 20px 10px;
+    margin: 20px 10px;
   }
 }
