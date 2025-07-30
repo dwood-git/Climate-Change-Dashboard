@@ -330,7 +330,7 @@ fig_corr = html.Div([
     ], className="graph-card"),
 
     html.Div([
-        html.H3("Georgia Wildfire Frequency Map", className="graph-title"),
+        html.H3("Georgia Wildfire Frequency Map (2001-2022)", className="graph-title"),
         html.Img(
             src="/static/ga_firefreq_map.jpg",
             style={
@@ -554,8 +554,7 @@ def update_linked_line(_):
         title_font=dict(family="Arial, sans-serif", size=22),
         font=dict(family="Arial, sans-serif")
     )
-    info_text = "Select a bubble to see averages for that year."
-    return fig, info_text
+    return fig
 
 
 # Callback for Satellite Vegetation Comparison dropdown
