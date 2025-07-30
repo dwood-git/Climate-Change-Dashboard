@@ -3,9 +3,6 @@ Dashboard content components for the wildfire climate change visualization.
 
 This module contains all the HTML/Dash components for different dashboard sections,
 including historical trends, vegetation indices, and climate correlations.
-
-Author: Dylan Wood
-Last updated: January 2025
 """
 
 from dash import html, dcc

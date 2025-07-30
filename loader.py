@@ -10,8 +10,6 @@ expected are:
 
 Each file contains monthly data which is processed to extract yearly averages,
 standardize column names, and filter data by year range.
-
-Last updated: May 2025
 """
 
 import pandas as pd

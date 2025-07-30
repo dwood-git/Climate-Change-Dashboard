@@ -6,8 +6,6 @@ It uses NumPy for polynomial fitting and Plotly Express for interactive plotting
 Libraries used:
 - NumPy
 - Plotly Express
-
-Last updated: May 2025
 """
 
 import numpy as np

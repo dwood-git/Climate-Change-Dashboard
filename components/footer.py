@@ -2,8 +2,6 @@
 
 This module uses the Dash HTML components library to create a styled footer element
 that can be included in the app's layout.
-
-Last updated: May 2025
 """
 
 from dash import html

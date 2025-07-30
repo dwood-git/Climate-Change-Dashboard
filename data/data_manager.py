@@ -4,9 +4,6 @@ Data management module for the wildfire climate change visualization dashboard.
 This module handles loading, caching, and providing access to all datasets
 used throughout the application, including temperature, precipitation,
 vegetation, drought, and fire data.
-
-Author: Dylan Wood
-Last updated: January 2025
 """
 
 import pandas as pd

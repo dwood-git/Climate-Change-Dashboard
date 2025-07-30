@@ -3,9 +3,6 @@ Main Flask-Dash application entry point.
 
 This module initializes the Flask server and Dash application,
 sets up data loading, and configures the main application structure.
-
-Author: Dylan Wood
-Last updated: January 2025
 """
 
 from flask import Flask

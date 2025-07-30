@@ -3,8 +3,6 @@
 This module provides functions to visualize vegetation trends over time.
 - build_ndvi_graph: Visualizes the Normalized Difference Vegetation Index (NDVI) trends by state.
 - build_evi_graph: Visualizes the Enhanced Vegetation Index (EVI) trends by state.
-
-Last updated: May 2025
 """
 
 import plotly.express as px

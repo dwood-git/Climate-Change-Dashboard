@@ -3,9 +3,6 @@ Defines the main layout for the Dash application.
 
 This module uses Dash's HTML and core components to build the structure of the app,
 including header, navigation buttons, data stores, dynamic content area, and footer.
-
-Author: Dylan Wood
-Last updated: January 2025
 """
 
 from dash import html, dcc

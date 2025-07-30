@@ -6,8 +6,6 @@ and folium for generating interactive HTML maps with overlays.
 Output:
 - A transparent PNG overlay representing fire frequency
 - An interactive HTML map with the overlay
-
-Last updated: May 2025
 """
 
 import rasterio

@@ -4,9 +4,6 @@ Callback functions for the Dash application.
 This module contains all the callback functions that handle user interactions
 and update the dashboard components accordingly. It manages tab switching,
 data filtering, and dynamic content updates.
-
-Author: Dylan Wood
-Last updated: January 2025
 """
 
 from dash import Input, Output, State, ctx, exceptions

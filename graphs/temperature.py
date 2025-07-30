@@ -7,8 +7,6 @@ It includes scatter plots of average temperatures over years, trendlines, overal
 Technologies used:
 - Plotly Express for interactive plotting
 - NumPy for polynomial fitting and numerical operations
-
-Last updated: May 2025
 """
 
 import numpy as np

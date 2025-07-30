@@ -2,8 +2,6 @@
 
 This module uses Plotly Express and pandas to create interactive visualizations that help analyze
 the relationships and trends among drought severity, vegetation indices, and wildfire occurrences.
-
-Last updated: May 2025
 """
 
 import plotly.express as px
