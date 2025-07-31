@@ -43,9 +43,9 @@ body {
 
 /* Navigation Button Styling */
 .nav-btn {
-  background: linear-gradient(135deg, #333333, #555555);
-  color: white;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: white;
+  color: #333;
+  border: none;
   border-radius: 8px;
   padding: 10px 20px;
   transition: 0.3s;
@@ -53,7 +53,7 @@ body {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 .nav-btn:hover {
-  background: linear-gradient(135deg, #444444, #666666);
+  background: #f8f9fa;
   transform: scale(1.05);
   transition: 0.3s ease-in-out;
   z-index: 1;
@@ -84,30 +84,59 @@ body {
 
 /* Graph Card and Graph Title Styling */
 .graph-card {
-  background: rgba(0, 0, 0, 0.5);
+  background: white;
   padding: 20px;
   border-radius: 12px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
   margin: 30px auto;
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/* Ensure all text within graph cards is black and bold, except graph titles and pre elements */
+.graph-card h1,
+.graph-card h2,
+.graph-card h3,
+.graph-card h4,
+.graph-card h5,
+.graph-card h6,
+.graph-card p,
+.graph-card span,
+.graph-card div {
+  color: #000000 !important;
+  font-weight: 700 !important;
+}
+
+/* GEE code should be regular weight, not bold */
+.graph-card pre {
+  color: #000000 !important;
+  font-weight: 400 !important;
+  font-family: 'Courier New', monospace;
+}
+
+/* Keep graph titles and subtitles white even when inside graph cards */
+.graph-card .graph-title {
+  color: #ffffff !important;
+  font-weight: 700 !important;
+}
+
+.graph-card .graph-subtitle {
+  color: #ffffff !important;
+  font-weight: 700 !important;
 }
 
 .graph-subtitle {
-  color: #ffffff;
-  font-weight: 600;
+  color: #ffffff !important;
+  font-weight: 700 !important;
   font-size: 16px;
   text-align: center;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
 }
 
 .graph-title {
-  color: #ffffff;
-  font-weight: 700;
+  color: #000000 !important;
+  font-weight: 700 !important;
   font-size: 24px;
   text-align: center;
   margin-bottom: 20px;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 /* Section Background Themes */
@@ -177,6 +206,23 @@ footer {
 .section-light h3,
 .section-light p {
   color: #ffffff;
+}
+
+/* Ensure graph titles stay black even in section-light */
+.section-light .graph-title {
+  color: #000000 !important;
+  font-weight: 700 !important;
+}
+
+/* Section headers (H2) should be white, individual graph titles (H3) should be black */
+.section-light h2.graph-title {
+  color: #ffffff !important;
+  font-weight: 700 !important;
+}
+
+.section-light h3.graph-title {
+  color: #000000 !important;
+  font-weight: 700 !important;
 }
 
 .section-light .graph-subtitle {
